@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.scss";
-import { WidgetContextProvider } from "./hooks/useWidgetContext/";
+import { WidgetContextProvider } from "./hooks/use-widget-context/";
 import { WidgetGrid } from "./components/widget-grid/";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";

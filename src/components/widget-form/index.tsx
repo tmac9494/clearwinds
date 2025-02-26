@@ -3,7 +3,7 @@ import { WidgetTypes } from "../widget-container/";
 import {
   ActionTypes,
   useWidgetContextDispatch,
-} from "../../hooks/useWidgetContext/";
+} from "../../hooks/use-widget-context/";
 import { WidgetFormInput } from "../widget-form-input/";
 import "./styles.scss";
 

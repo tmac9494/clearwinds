@@ -3,10 +3,10 @@ import {
   ActionTypes,
   useWidgetContext,
   useWidgetContextDispatch,
-} from "../../hooks/useWidgetContext/";
+} from "../../hooks/use-widget-context/";
 import { WidgetContainer, WidgetTypes } from "../widget-container/";
-import { PieChart } from "../PieChart";
-import { mockPieChartData } from "../PieChart/utils";
+import { PieChart } from "../pie-chart";
+import { mockPieChartData } from "../pie-chart/utils";
 import { Counter } from "../counter";
 import { DataTable } from "../data-table";
 import { CreateNewWidget } from "../create-new-widget";

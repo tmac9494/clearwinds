@@ -3,7 +3,7 @@ import { useDrag, useDrop } from "react-dnd";
 import {
   ActionTypes,
   useWidgetContextDispatch,
-} from "../../hooks/useWidgetContext";
+} from "../../hooks/use-widget-context";
 import "./styles.scss";
 
 export enum WidgetTypes {

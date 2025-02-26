@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles.scss";
-import { TableData, useTableData } from "../../hooks/useTableData";
+import { TableData, useTableData } from "../../hooks/use-table-data";
 
 export const DataTable = ({
   refetchInterval,
