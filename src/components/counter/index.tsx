@@ -9,12 +9,17 @@ export const Counter = () => {
       <div className="counter-value">{count}</div>
       <div className="counter-controls">
         <button
+          data-testid="counter-decrement"
           className="counter-button"
           onClick={() => count > 0 && setCount(count - 1)}
         >
           -
         </button>
-        <button className="counter-button" onClick={() => setCount(count + 1)}>
+        <button
+          data-testid="counter-increment"
+          className="counter-button"
+          onClick={() => setCount(count + 1)}
+        >
           +
         </button>
       </div>

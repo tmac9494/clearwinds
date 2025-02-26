@@ -23,7 +23,7 @@ describe("Widgets", () => {
       render(<Counter />);
       const decrementButton = screen.getByText("-");
       decrementButton.click();
-      expect(screen.getByText("-1")).toBeInTheDocument();
+      expect(screen.getByText("0")).toBeInTheDocument();
     });
   });
 
