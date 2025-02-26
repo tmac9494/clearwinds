@@ -114,7 +114,7 @@ export const WidgetGrid = () => {
                 widget={widget}
                 counters={counters}
                 counterTitles={counterTitles}
-                gridItemBaseWidth={gridItemBaseWidth - 24}
+                gridItemBaseWidth={gridItemBaseWidth}
                 gridItemBaseHeight={gridItemBaseHeight}
                 pieCounters={pieCounters}
                 setPieCoutners={setPieCoutners}
