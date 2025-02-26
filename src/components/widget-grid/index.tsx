@@ -10,8 +10,8 @@ import { mockPieChartData } from "../PieChart/utils";
 import { Counter } from "../counter";
 import { DataTable } from "../data-table";
 import { CreateNewWidget } from "../create-new-widget";
-import "./styles.scss";
 import { WidgetHeader } from "../widget-header";
+import "./styles.scss";
 
 export const WidgetGrid = () => {
   const widgets = useWidgetContext();

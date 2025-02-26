@@ -7,19 +7,26 @@ import { WidgetStateHandler } from "./hooks/useWidgetContext/reducer";
 
 describe("Widgets", () => {
   describe("Counter", () => {
-    it("renders the counter", () => {
+    it("should render the counter", () => {
       render(<Counter />);
       expect(screen.getByText("0")).toBeInTheDocument();
     });
 
-    it("increments the counter", () => {
+    it("should increment the counter", () => {
       render(<Counter />);
       const incrementButton = screen.getByText("+");
       incrementButton.click();
       expect(screen.getByText("1")).toBeInTheDocument();
     });
 
-    it("decrements the counter", () => {
+    it("should decrement the counter", () => {
+      render(<Counter />);
+      const decrementButton = screen.getByText("-");
+      decrementButton.click();
+      expect(screen.getByText("0")).toBeInTheDocument();
+    });
+
+    it("should not decrement the counter below 0", () => {
       render(<Counter />);
       const decrementButton = screen.getByText("-");
       decrementButton.click();
@@ -28,12 +35,12 @@ describe("Widgets", () => {
   });
 
   describe("DataTable", () => {
-    it("renders the loading state", () => {
+    it("should render the loading state", () => {
       render(<DataTable />);
       expect(screen.getByText("Loading...")).toBeInTheDocument();
     });
 
-    it("calls the fetch api and returns a list of random users", async () => {
+    it("should call the fetch api and returns a list of random users", async () => {
       render(<DataTable />);
       const response = await screen.findByText("Antonette");
       expect(response).toBeInTheDocument();
