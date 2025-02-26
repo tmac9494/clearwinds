@@ -1,3 +1,23 @@
+
+## Documentation of key decisions and architecture
+  - for pie charts used visx pie chart boilerplate
+  - used context for widget management
+  - used a new pattern I like where a class based approach is used in the context reducer with action types as method names
+  - react dnd - tried and true drag and drop library in react
+  - data table pulls data from a free api that provides random user data
+## Instructions for running tests
+  - npm run test
+## List of potential improvements if given more time
+  - styles and animations
+  - unit test coverage
+  - organize types
+  - global state for counter widgets to feed into pie charts
+  - better solution for catching resize events in grid
+  - reusable error boundaries
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
