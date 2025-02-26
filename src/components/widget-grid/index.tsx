@@ -11,6 +11,7 @@ import { Counter } from "../counter";
 import { DataTable } from "../data-table";
 import { CreateNewWidget } from "../create-new-widget";
 import "./styles.scss";
+import { WidgetHeader } from "../widget-header";
 
 export const WidgetGrid = () => {
   const widgets = useWidgetContext();
@@ -66,30 +67,17 @@ export const WidgetGrid = () => {
             height={gridItemBaseHeight * widget.position.height}
           >
             <div className="content-container">
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  padding: "2px 2px 0 2px",
-                }}
-              >
-                <h4 style={{ margin: 0, fontSize: 14 }}>
-                  {widget.config.title}
-                </h4>
-                <button
-                  onClick={() =>
-                    dispatch({
-                      type: ActionTypes.REMOVE_WIDGET,
-                      payload: widget.id,
-                    })
-                  }
-                >
-                  Remove
-                </button>
-              </div>
+              <WidgetHeader
+                onRemove={() =>
+                  dispatch({
+                    type: ActionTypes.REMOVE_WIDGET,
+                    payload: widget.id,
+                  })
+                }
+                title={widget.config.title}
+              />
               {widget.type === WidgetTypes.chart && (
-                <div style={{ marginTop: -12 }}>
+                <div className="widget-chart-container">
                   <PieChart
                     margin={{ top: 2, bottom: 32 }}
                     width={gridItemBaseWidth * widget.position.width}
