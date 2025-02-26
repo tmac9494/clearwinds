@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "age": 30,
+    "email": "jdoe@test.com"
+  },
+  {
+    "id": 2,
+    "name": "Jane Doe",
+    "age": 25,
+    "email": "jndoe@test.com"
+  },
+  {
+    "id": 3,
+    "name": "John Smith",
+    "age": 35,
+    "email": "jsmith@test.com"
+  },
+  {
+    "id": 4,
+    "name": "Jane Smith",
+    "age": 28,
+    "email": "jnsmith@test.com"
+  },
+  {
+    "id": 5,
+    "name": "John Johnson",
+    "age": 40,
+    "email": "jjohnson@test.com"
+  },
+  {
+    "id": 6,
+    "name": "Jane Johnson",
+    "age": 32,
+    "email": "jnjohnson@test.com"
+  }
+]
