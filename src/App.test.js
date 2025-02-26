@@ -59,11 +59,11 @@ describe("Widgets", () => {
           getValue={(data) => data.value}
         />
       );
-    it("renders the pie chart", () => {
+    it("should render the pie chart", () => {
       renderPiechart();
       expect(screen.getByText("test chart")).toBeInTheDocument();
     });
-    it("renders the pie chart labels", () => {
+    it("should render the pie chart labels", () => {
       renderPiechart();
       expect(screen.getByText("a")).toBeInTheDocument();
       expect(screen.getByText("b")).toBeInTheDocument();
