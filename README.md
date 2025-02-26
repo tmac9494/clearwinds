@@ -14,6 +14,7 @@
   - global state for counter widgets to feed into pie charts
   - better solution for catching resize events in grid
   - reusable error boundaries
+  - more drop points inbetween individual widgets
 
 
 
