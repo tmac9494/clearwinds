@@ -23,7 +23,10 @@ export const WidgetContextProvider = ({ children }: PropsWithChildren<{}>) => {
   );
 
   const memoizedWidgets = React.useMemo(
-    () => Object.values(widgets),
+    () =>
+      Object.values(widgets).sort(
+        (a: any, b: any) => a.position.index - b.position.index
+      ),
     [widgets]
   );
 

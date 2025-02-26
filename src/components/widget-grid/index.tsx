@@ -20,10 +20,6 @@ export const WidgetGrid = () => {
   const [containerWidth, setContainerWidth] = React.useState(0);
   const [node, setNode] = useState<HTMLDivElement>();
 
-  const widgetsInOrder = Object.values(widgets).sort(
-    (a: any, b: any) => a.position.index - b.position.index
-  );
-
   const dimensionDenominator =
     containerWidth >= 1000 ? 5 : containerWidth >= 600 ? 3 : 2;
   const gridItemBaseWidth = node
@@ -55,7 +51,7 @@ export const WidgetGrid = () => {
 
   return (
     <div className="grid" ref={containerCallback as any}>
-      {widgetsInOrder.map((widget: any) => {
+      {widgets.map((widget: any) => {
         return (
           <WidgetContainer
             key={widget.id}
@@ -99,9 +95,7 @@ export const WidgetGrid = () => {
       <CreateNewWidget
         gridItemBaseWidth={gridItemBaseWidth}
         gridItemBaseHeight={gridItemBaseHeight}
-        newIndex={
-          widgetsInOrder[widgetsInOrder.length - 1]?.position.index + 1 || 0
-        }
+        newIndex={widgets[widgets.length - 1]?.position.index + 1 || 0}
       />
     </div>
   );
