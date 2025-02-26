@@ -5,12 +5,10 @@ import {
   useWidgetContextDispatch,
 } from "../../hooks/use-widget-context/";
 import { WidgetContainer, WidgetTypes } from "../widget-container/";
-import { Counter } from "../counter";
-import { DataTable } from "../data-table";
 import { CreateNewWidget } from "../create-new-widget";
 import { WidgetHeader } from "../widget-header";
 import "./styles.scss";
-import { PieChartWidget } from "../PieChartWidget";
+import { WidgetContent } from "../widget-content";
 
 export const WidgetGrid = () => {
   const widgets = useWidgetContext();
@@ -112,44 +110,16 @@ export const WidgetGrid = () => {
                 }}
                 title={widget.config.title}
               />
-              {widget.type === WidgetTypes.chart && (
-                <PieChartWidget
-                  counterTitles={counterTitles}
-                  counters={counters}
-                  widget={widget}
-                  gridItemBaseWidth={gridItemBaseWidth - 24}
-                  gridItemBaseHeight={gridItemBaseHeight}
-                  pieCounters={pieCounters}
-                  setPieCoutners={setPieCoutners}
-                  counterData={(pieCounters[widget.id] || []).reduce(
-                    (acc, val) =>
-                      acc.concat([
-                        {
-                          id: val,
-                          value: counters[val] ?? 0,
-                        },
-                      ]),
-                    [] as Array<{
-                      id: string;
-                      value: number;
-                    }>
-                  )}
-                />
-              )}
-              {widget.type === WidgetTypes.counter && (
-                <Counter
-                  value={counters[widget.id]}
-                  onChange={(value: number) => {
-                    setCounters((prev) => ({
-                      ...prev,
-                      [widget.id]: value,
-                    }));
-                  }}
-                />
-              )}
-              {widget.type === WidgetTypes.dataTable && (
-                <DataTable refetchInterval={widget?.refetchInterval} />
-              )}
+              <WidgetContent
+                widget={widget}
+                counters={counters}
+                counterTitles={counterTitles}
+                gridItemBaseWidth={gridItemBaseWidth - 24}
+                gridItemBaseHeight={gridItemBaseHeight}
+                pieCounters={pieCounters}
+                setPieCoutners={setPieCoutners}
+                setCounters={setCounters}
+              />
             </div>
           </WidgetContainer>
         );
