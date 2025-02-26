@@ -23,7 +23,8 @@ export const WidgetGrid = () => {
     (a: any, b: any) => a.position.index - b.position.index
   );
 
-  const dimensionDenominator = 5;
+  const dimensionDenominator =
+    containerWidth >= 1000 ? 5 : containerWidth >= 600 ? 3 : 2;
   const gridItemBaseWidth = node
     ? node.getBoundingClientRect().width / dimensionDenominator
     : containerWidth / dimensionDenominator;
