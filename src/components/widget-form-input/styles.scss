@@ -1,6 +1,6 @@
 .widget-form-input {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   gap: 4px;
   text-align: left;
@@ -12,5 +12,11 @@
   label {
     width: 60px;
     font-size: 14px;
+  }
+}
+
+@media (min-width: 600px) {
+  .widget-form-input {
+    flex-direction: row;
   }
 }

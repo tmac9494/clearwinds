@@ -28,12 +28,14 @@ export const WidgetGrid = () => {
 
   const [containerWidth, setContainerWidth] = React.useState(0);
   const [node, setNode] = useState<HTMLDivElement>();
+
   const [counters, setCounters] =
     useState<Record<string, number>>(initialCounters);
   const [pieCounters, setPieCoutners] = useState<Record<string, string[]>>({});
 
   const dimensionDenominator =
     containerWidth >= 1000 ? 5 : containerWidth >= 600 ? 3 : 2;
+
   const gridItemBaseWidth = node
     ? node.getBoundingClientRect().width / dimensionDenominator
     : containerWidth / dimensionDenominator;
@@ -102,11 +104,11 @@ export const WidgetGrid = () => {
             <div className="content-container">
               <WidgetHeader
                 onRemove={() => {
-                  removeCounterFromPieCounters(widget.id);
                   dispatch({
                     type: ActionTypes.REMOVE_WIDGET,
                     payload: widget.id,
                   });
+                  removeCounterFromPieCounters(widget.id);
                 }}
                 title={widget.config.title}
               />
