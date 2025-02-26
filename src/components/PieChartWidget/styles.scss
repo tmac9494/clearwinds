@@ -5,7 +5,8 @@
     position: absolute;
     left: auto;
     right: 2px;
-    top: 20px;
+    top: auto;
+    bottom: -6px;
     display: flex;
     flex-direction: column;
   }
@@ -15,7 +16,14 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     gap: 4px;
+    border: 0;
+    background: #000;
+    color: #fff;
+    padding: 6px 0;
+    width: 100%;
+    min-width: 71px;
     span:last-child {
       margin-bottom: -13px;
       font-size: 18px;
@@ -25,11 +33,16 @@
     cursor: pointer;
     border: 0;
     display: block;
-    background: none;
+    background: #fff;
     font-size: 12px;
     padding: 4px 8px;
     text-align: left;
     width: 100%;
+    border: 1px solid #707070;
+    border-bottom: 0;
+    &:last-child {
+      border-bottom: 1px solid #707070;
+    }
     &:hover {
       background-color: #f2f2f2;
     }
