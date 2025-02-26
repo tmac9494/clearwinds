@@ -41,7 +41,6 @@ export const WidgetForm = ({
   };
 
   const handleSubmit = () => {
-    console.log({ title, width, height, type });
     if (!isFormValid()) {
       setValidationMessage("Please fill out all fields");
       return;
