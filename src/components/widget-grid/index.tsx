@@ -72,6 +72,20 @@ export const WidgetGrid = () => {
     {} as Record<string, string>
   );
 
+  const removeCounterFromPieCounters = (counterId: string) => {
+    const pieCounterUpdate = Object.keys(pieCounters).reduce((acc, key) => {
+      if (pieCounters[key]?.includes(counterId)) {
+        return {
+          ...acc,
+          [key]: pieCounters[key].filter((id) => id !== counterId),
+        };
+      }
+      return acc;
+    }, {} as Record<string, string[]>);
+
+    setPieCoutners(pieCounterUpdate);
+  };
+
   return (
     <div className="grid" ref={containerCallback as any}>
       {widgets.map((widget: any) => {
@@ -87,12 +101,13 @@ export const WidgetGrid = () => {
           >
             <div className="content-container">
               <WidgetHeader
-                onRemove={() =>
+                onRemove={() => {
+                  removeCounterFromPieCounters(widget.id);
                   dispatch({
                     type: ActionTypes.REMOVE_WIDGET,
                     payload: widget.id,
-                  })
-                }
+                  });
+                }}
                 title={widget.config.title}
               />
               {widget.type === WidgetTypes.chart && (
