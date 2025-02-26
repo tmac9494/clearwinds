@@ -4,7 +4,13 @@
   justify-content: space-between;
   padding: 2px 2px 0 2px;
   position: relative;
-  z-index: 2;
+  z-index: 29;
+  .close {
+    cursor: pointer;
+    font-weight: bold;
+    border: 0;
+    background: none;
+  }
 }
 
 .widget-title {

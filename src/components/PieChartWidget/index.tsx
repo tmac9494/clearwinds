@@ -52,15 +52,21 @@ export const PieChartWidget = ({
       <button className="open" onClick={() => setModal(!modal)}>
         options
       </button>
-      <PieChart<(typeof dataset)[0]>
-        margin={{ top: 2, bottom: 32 }}
-        width={gridItemBaseWidth * widget.position.width}
-        height={gridItemBaseHeight * widget.position.height}
-        data={dataset}
-        getLabel={(data) => counterTitles[data?.data.id]}
-        getId={(data) => data.id}
-        getValue={(data) => data.value}
-      />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <PieChart<(typeof dataset)[0]>
+          margin={{ top: 2, bottom: 40, left: 0, right: 0 }}
+          width={
+            gridItemBaseWidth > 400
+              ? 400
+              : gridItemBaseWidth * widget.position.width
+          }
+          height={gridItemBaseHeight * widget.position.height}
+          data={dataset}
+          getLabel={(data) => counterTitles[data?.data.id]}
+          getId={(data) => data.id}
+          getValue={(data) => data.value}
+        />
+      </div>
       {modal && (
         <div className="modal">
           <div className="modal-content">

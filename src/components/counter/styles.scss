@@ -1,6 +1,35 @@
 .counter {
   display: flex;
-  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 80%;
   gap: 8px;
   padding: 0 12px;
+}
+
+.counter-controls {
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  .counter-value {
+    padding: 12px 18px;
+    border: 1px solid #b3b3b3;
+    border-left: none;
+    border-right: none;
+  }
+  button {
+    cursor: pointer;
+    border: 0;
+    background: #000;
+    width: 32px;
+    color: #fff;
+  }
+  .counter-increment {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+  .counter-decrement {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
 }

@@ -1,33 +1,46 @@
+import React, { useState } from "react";
 import { render, screen } from "@testing-library/react";
+
 import { Counter } from "./components/counter";
 import { DataTable } from "./components/data-table";
-import { PieChart } from "./components/PieChart";
-import { mockPieChartData } from "./components/PieChart/utils";
-import { WidgetStateHandler } from "./hooks/useWidgetContext/reducer";
+import { PieChart } from "./components/pie-chart";
+import { mockPieChartData } from "./components/pie-chart/utils";
+import { WidgetStateHandler } from "./hooks/use-widget-context/reducer";
+import {
+  ActionTypes,
+  WidgetContextState,
+} from "./hooks/use-widget-context/types";
 
 describe("Widgets", () => {
   describe("Counter", () => {
+    const CounterTestComponent = () => {
+      const [count, setCount] = useState(0);
+      return (
+        <Counter value={count} onChange={(value: number) => setCount(value)} />
+      );
+    };
+
     it("should render the counter", () => {
-      render(<Counter />);
+      render(<CounterTestComponent />);
       expect(screen.getByText("0")).toBeInTheDocument();
     });
 
     it("should increment the counter", () => {
-      render(<Counter />);
+      render(<CounterTestComponent />);
       const incrementButton = screen.getByText("+");
       incrementButton.click();
       expect(screen.getByText("1")).toBeInTheDocument();
     });
 
     it("should decrement the counter", () => {
-      render(<Counter />);
+      render(<CounterTestComponent />);
       const decrementButton = screen.getByText("-");
       decrementButton.click();
       expect(screen.getByText("0")).toBeInTheDocument();
     });
 
     it("should not decrement the counter below 0", () => {
-      render(<Counter />);
+      render(<CounterTestComponent />);
       const decrementButton = screen.getByText("-");
       decrementButton.click();
       expect(screen.getByText("0")).toBeInTheDocument();
@@ -89,7 +102,7 @@ describe("Widget Context State Handler", () => {
       type: "pie-chart",
       position: { width: 1, height: 1, index: 2 },
     },
-  };
+  } as unknown as WidgetContextState;
   const stateHandler = new WidgetStateHandler(initialState);
 
   it("should return the initial state", () => {
@@ -98,7 +111,7 @@ describe("Widget Context State Handler", () => {
 
   it("should swap the index position on SWAP_WIDGET action", () => {
     stateHandler["SWAP_WIDGETS"]({
-      type: "SWAP_WIDGETS",
+      type: ActionTypes.SWAP_WIDGETS,
       payload: { source: "counter", destination: "data-table" },
     });
     const newState = stateHandler.getState();
@@ -112,7 +125,7 @@ describe("Widget Context State Handler", () => {
 
   it("should remove the widget on REMOVE_WIDGET action", () => {
     stateHandler["REMOVE_WIDGET"]({
-      type: "REMOVE_WIDGET",
+      type: ActionTypes.REMOVE_WIDGET,
       payload: "counter",
     });
     const newState = stateHandler.getState();
@@ -121,7 +134,7 @@ describe("Widget Context State Handler", () => {
 
   it("should add the widget on ADD_WIDGET action", () => {
     stateHandler["ADD_WIDGET"]({
-      type: "ADD_WIDGET",
+      type: ActionTypes.ADD_WIDGET,
       payload: {
         id: "new-widget",
         type: "counter",

@@ -10,18 +10,18 @@ export const Counter = ({
 }) => {
   return (
     <div className="counter">
-      <div className="counter-value">{value}</div>
       <div className="counter-controls">
         <button
           data-testid="counter-decrement"
-          className="counter-button"
+          className="counter-button counter-decrement"
           onClick={() => value > 0 && onChange(value - 1)}
         >
           -
         </button>
+        <div className="counter-value">{value}</div>
         <button
           data-testid="counter-increment"
-          className="counter-button"
+          className="counter-button counter-increment"
           onClick={() => onChange(value + 1)}
         >
           +

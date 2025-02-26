@@ -10,7 +10,9 @@ export const WidgetHeader = ({
   return (
     <div className="widget-header">
       <h4 className="widget-title">{title}</h4>
-      <button onClick={onRemove}>Remove</button>
+      <button className="close" onClick={onRemove}>
+        &#10005;
+      </button>
     </div>
   );
 };
