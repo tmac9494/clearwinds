@@ -11,10 +11,10 @@
   - styles and animations
   - unit test coverage
   - organize types
-  - global state for counter widgets to feed into pie charts
   - better solution for catching resize events in grid
   - reusable error boundaries
   - more drop points inbetween individual widgets
+  - move pie chart counter state into widget context 
 
 
 
