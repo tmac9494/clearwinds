@@ -40,9 +40,11 @@ export const PieChartWidget = ({
   const counterOptions = useMemo(
     () =>
       Object.keys(counters).filter((key) =>
-        pieCounters ? !pieCounters[widget.id]?.find((d) => d === key) : true
+        pieCounters
+          ? !counterData?.find((d) => d.id === key) && counterTitles[key]
+          : true
       ),
-    [pieCounters, widget.id, counters]
+    [pieCounters, counters, counterData, counterTitles]
   );
 
   return (
