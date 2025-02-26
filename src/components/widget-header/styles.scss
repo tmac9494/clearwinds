@@ -3,6 +3,8 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 2px 2px 0 2px;
+  position: relative;
+  z-index: 2;
 }
 
 .widget-title {
