@@ -5,20 +5,32 @@ import {
   useWidgetContextDispatch,
 } from "../../hooks/use-widget-context/";
 import { WidgetContainer, WidgetTypes } from "../widget-container/";
-import { PieChart } from "../pie-chart";
-import { mockPieChartData } from "../pie-chart/utils";
 import { Counter } from "../counter";
 import { DataTable } from "../data-table";
 import { CreateNewWidget } from "../create-new-widget";
 import { WidgetHeader } from "../widget-header";
 import "./styles.scss";
+import { PieChartWidget } from "../PieChartWidget";
 
 export const WidgetGrid = () => {
   const widgets = useWidgetContext();
   const dispatch = useWidgetContextDispatch();
+  const initialCounters = widgets.reduce(
+    (acc, widget) =>
+      widget.type === WidgetTypes.counter
+        ? {
+            ...acc,
+            [widget.id]: 0,
+          }
+        : acc,
+    {}
+  );
 
   const [containerWidth, setContainerWidth] = React.useState(0);
   const [node, setNode] = useState<HTMLDivElement>();
+  const [counters, setCounters] =
+    useState<Record<string, number>>(initialCounters);
+  const [pieCounters, setPieCoutners] = useState<Record<string, string[]>>({});
 
   const dimensionDenominator =
     containerWidth >= 1000 ? 5 : containerWidth >= 600 ? 3 : 2;
@@ -49,6 +61,17 @@ export const WidgetGrid = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [node, widgets]);
 
+  const counterTitles = widgets.reduce(
+    (acc, widget) =>
+      widget.type === WidgetTypes.counter
+        ? {
+            ...acc,
+            [widget.id]: widget.config.title,
+          }
+        : acc,
+    {} as Record<string, string>
+  );
+
   return (
     <div className="grid" ref={containerCallback as any}>
       {widgets.map((widget: any) => {
@@ -73,18 +96,40 @@ export const WidgetGrid = () => {
                 title={widget.config.title}
               />
               {widget.type === WidgetTypes.chart && (
-                <div className="widget-chart-container">
-                  <PieChart
-                    margin={{ top: 2, bottom: 32 }}
-                    width={gridItemBaseWidth * widget.position.width}
-                    height={gridItemBaseHeight * widget.position.height}
-                    data={mockPieChartData}
-                    getId={(data) => data.id}
-                    getValue={(data) => data.value}
-                  />
-                </div>
+                <PieChartWidget
+                  counterTitles={counterTitles}
+                  counters={counters}
+                  widget={widget}
+                  gridItemBaseWidth={gridItemBaseWidth}
+                  gridItemBaseHeight={gridItemBaseHeight}
+                  pieCounters={pieCounters}
+                  setPieCoutners={setPieCoutners}
+                  counterData={(pieCounters[widget.id] || []).reduce(
+                    (acc, val) =>
+                      acc.concat([
+                        {
+                          id: val,
+                          value: counters[val] ?? 0,
+                        },
+                      ]),
+                    [] as Array<{
+                      id: string;
+                      value: number;
+                    }>
+                  )}
+                />
               )}
-              {widget.type === WidgetTypes.counter && <Counter />}
+              {widget.type === WidgetTypes.counter && (
+                <Counter
+                  value={counters[widget.id]}
+                  onChange={(value: number) => {
+                    setCounters((prev) => ({
+                      ...prev,
+                      [widget.id]: value,
+                    }));
+                  }}
+                />
+              )}
               {widget.type === WidgetTypes.dataTable && (
                 <DataTable refetchInterval={widget?.refetchInterval} />
               )}
@@ -96,6 +141,12 @@ export const WidgetGrid = () => {
         gridItemBaseWidth={gridItemBaseWidth}
         gridItemBaseHeight={gridItemBaseHeight}
         newIndex={widgets[widgets.length - 1]?.position.index + 1 || 0}
+        createNewCounter={(id: string) =>
+          setCounters((prev) => ({
+            ...prev,
+            [id]: 0,
+          }))
+        }
       />
     </div>
   );

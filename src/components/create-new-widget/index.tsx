@@ -8,10 +8,12 @@ export const CreateNewWidget = ({
   gridItemBaseWidth,
   gridItemBaseHeight,
   newIndex,
+  createNewCounter,
 }: {
   gridItemBaseWidth: number;
   gridItemBaseHeight: number;
   newIndex: number;
+  createNewCounter: (id: string) => void;
 }) => {
   return (
     <WidgetContainer
@@ -31,7 +33,7 @@ export const CreateNewWidget = ({
       draggable={false}
     >
       <div className="content-container new-widget">
-        <WidgetForm newIndex={newIndex} />
+        <WidgetForm newIndex={newIndex} createNewCounter={createNewCounter} />
       </div>
     </WidgetContainer>
   );

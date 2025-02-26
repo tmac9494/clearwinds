@@ -16,9 +16,11 @@ const widgetTypeTitles = {
 export const WidgetForm = ({
   closeForm,
   newIndex,
+  createNewCounter,
 }: {
   closeForm?: () => void;
   newIndex: number;
+  createNewCounter: (id: string) => void;
 }) => {
   const [title, setTitle] = React.useState<string>("");
   const [width, setWidth] = React.useState<number>(1);
@@ -45,10 +47,12 @@ export const WidgetForm = ({
       setValidationMessage("Please fill out all fields");
       return;
     }
+    const id = Date.now().toString();
+
     widgetDispatch({
       type: ActionTypes.ADD_WIDGET,
       payload: {
-        id: Date.now(),
+        id,
         position: {
           width,
           height,
@@ -63,6 +67,7 @@ export const WidgetForm = ({
     });
     closeForm && closeForm();
     resetFormState();
+    createNewCounter(id);
   };
 
   const handleWidth = (value: number) => {

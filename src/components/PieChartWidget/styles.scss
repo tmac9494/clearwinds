@@ -1,0 +1,11 @@
+.widget-chart-container {
+  margin-top: -12px;
+  position: relative;
+  .open {
+    display: inline-block;
+    position: absolute;
+    left: auto;
+    right: 2px;
+    top: 20px;
+  }
+}
