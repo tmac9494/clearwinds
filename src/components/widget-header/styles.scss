@@ -1,0 +1,11 @@
+.widget-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 2px 2px 0 2px;
+}
+
+.widget-title {
+  font-size: 14px;
+  margin: 0;
+}
