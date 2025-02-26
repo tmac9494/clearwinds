@@ -10,7 +10,7 @@ export const Counter = () => {
       <div className="counter-controls">
         <button
           className="counter-button"
-          onClick={() => count >= 0 && setCount(count - 1)}
+          onClick={() => count > 0 && setCount(count - 1)}
         >
           -
         </button>
