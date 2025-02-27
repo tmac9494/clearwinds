@@ -16,13 +16,11 @@
 
 ## List of potential improvements if given more time
 
-- styles and animations
-- unit test coverage
+- styles
 - organize types
 - better solution for catching resize events in grid
 - reusable error boundaries
 - more drop points inbetween individual widgets
-- move pie chart counter state into widget context
 
 # Getting Started with Create React App
 
