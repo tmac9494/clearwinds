@@ -1,7 +1,10 @@
 import React, { useMemo } from "react";
 import "./styles.scss";
 import { PieChart } from "../pie-chart";
-import { mockPieChartData } from "../pie-chart/utils";
+import {
+  defaultPieChartColorRange,
+  mockPieChartData,
+} from "../pie-chart/utils";
 import { WidgetContainerProps } from "../widget-container";
 import classNames from "classnames";
 import {
@@ -10,6 +13,8 @@ import {
   usePieCounters,
   useWidgetContextDispatch,
 } from "../../hooks/use-widget-context";
+import { scaleOrdinal } from "@visx/scale";
+import { getContrastColor } from "../../utils";
 
 export const PieChartWidget = ({
   widget,
@@ -56,6 +61,11 @@ export const PieChartWidget = ({
 
   const chartWidth = gridItemBaseWidth * widget.position.width;
 
+  const getDataColor = scaleOrdinal({
+    domain: dataset.map((d) => d.id),
+    range: defaultPieChartColorRange,
+  });
+
   return (
     <div className="widget-chart-container" data-testid="chart-widget">
       <div className="modal-container">
@@ -69,19 +79,30 @@ export const PieChartWidget = ({
         </button>
         {modal && (
           <div className="modal">
-            {counterOptions.map((key) => (
-              <button
-                onClick={() => handleSetPieCounters(key)}
-                className={classNames(
-                  "modal-option",
-                  counterData?.find((d) => d.id === key) && "active"
-                )}
-                key={key}
-                value={key}
-              >
-                {counterTitles[key]}
-              </button>
-            ))}
+            {counterOptions.map((key) => {
+              const backgroundColor = counterData.find((d) => d.id === key)
+                ? getDataColor(key)
+                : undefined;
+              return (
+                <button
+                  onClick={() => handleSetPieCounters(key)}
+                  style={{
+                    color: backgroundColor
+                      ? getContrastColor(backgroundColor)
+                      : "#000",
+                    backgroundColor,
+                  }}
+                  className={classNames(
+                    "modal-option",
+                    counterData?.find((d) => d.id === key) && "active"
+                  )}
+                  key={key}
+                  value={key}
+                >
+                  {counterTitles[key]}
+                </button>
+              );
+            })}
           </div>
         )}
       </div>

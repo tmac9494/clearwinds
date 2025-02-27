@@ -26,7 +26,7 @@ export const PieChart = <DataType,>({
   onSelect,
   selection,
 }: PieChartProps<DataType>) => {
-  const getLetterFrequencyColor = scaleOrdinal({
+  const getDataColor = scaleOrdinal({
     domain: data.map((sliceData) => getId(sliceData)),
     range: defaultPieChartColorRange,
   });
@@ -82,8 +82,7 @@ export const PieChart = <DataType,>({
                   )
                 }
                 getColor={({ data }) =>
-                  (getColor && getColor(data)) ??
-                  getLetterFrequencyColor(getId(data))
+                  (getColor && getColor(data)) ?? getDataColor(getId(data))
                 }
                 getLabel={getLabel}
               />
