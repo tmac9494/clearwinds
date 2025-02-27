@@ -29,13 +29,13 @@ export const getWidgetGridRows = () => {
 
 export const getContrastColor = (colorString: string) => {
   const color = "" + colorString;
-  const isHEX = color.indexOf("#") == 0;
-  const isRGB = color.indexOf("rgb") == 0;
+  const isHEX = color.indexOf("#") === 0;
+  const isRGB = color.indexOf("rgb") === 0;
   let r = 0,
     g = 0,
     b = 0;
   if (isHEX) {
-    const hasFullSpec = color.length == 7;
+    const hasFullSpec = color.length === 7;
     const m = color.substr(1).match(hasFullSpec ? /(\S{2})/g : /(\S{1})/g);
     if (m) {
       r = parseInt(m[0] + (hasFullSpec ? "" : m[0]), 16);
