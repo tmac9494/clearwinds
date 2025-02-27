@@ -13,7 +13,8 @@
       "!src/reportWebVitals.js",
       "!src/serviceWorker.js",
       "!src/setupTests.ts",
-      "!src/index.js"
+      "!src/index.js",
+      "!src/App.tsx"
     ]
   },
   "dependencies": {

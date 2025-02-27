@@ -50,4 +50,11 @@ describe("WidgetContent", () => {
     });
     expect(screen.getByTestId("chart-widget")).toBeInTheDocument();
   });
+
+  it("should return null if widget type is not found", () => {
+    const { container } = renderComponent({
+      widget: { type: "unknown" as WidgetTypes },
+    });
+    expect(container.innerHTML).toEqual("");
+  });
 });

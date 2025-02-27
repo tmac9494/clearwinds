@@ -86,7 +86,11 @@ export const WidgetGrid = () => {
   };
 
   return (
-    <div className="grid" ref={containerCallback as any}>
+    <div
+      data-testid="widget-grid"
+      className="grid"
+      ref={containerCallback as any}
+    >
       {widgets.map((widget: WidgetContainerProps) => {
         return (
           <WidgetContainer

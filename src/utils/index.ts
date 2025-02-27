@@ -7,7 +7,7 @@ export const getWidgetStateFromStorage = () => {
     localStorage.getItem(WIDGET_STORAGE_KEY) ||
       '{ "widgets": {}, "counters": {}, "pieCounters": {} }'
   );
-  return (state ?? {}) as WidgetContextState;
+  return state as WidgetContextState;
 };
 
 export const saveWidgetStateToStorage = (state: WidgetContextState) => {

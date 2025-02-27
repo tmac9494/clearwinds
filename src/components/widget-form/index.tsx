@@ -83,7 +83,7 @@ export const WidgetForm = ({
   };
 
   const handleRefetchInterval = (value: number) => {
-    if (value > 0) {
+    if (value >= 0) {
       setRefetchInterval(value);
     }
   };
@@ -101,7 +101,7 @@ export const WidgetForm = ({
   }, [validationMessage, isFormValid]);
 
   return (
-    <div>
+    <div data-testid="widget-form">
       {validationMessage && (
         <p className="validation-message">{validationMessage}</p>
       )}
@@ -123,6 +123,7 @@ export const WidgetForm = ({
 
         <WidgetFormInput label="Type">
           <select
+            data-testid="form-type-input"
             onChange={(e) => setType(e.target.value as WidgetTypes)}
             value={type}
           >
@@ -138,6 +139,7 @@ export const WidgetForm = ({
         {type === WidgetTypes.dataTable && (
           <WidgetFormInput label="Refetch(S)">
             <input
+              data-testid="form-refetch-input"
               value={refetchInterval}
               type="number"
               placeholder="Refetch Interval(seconds)"
@@ -148,6 +150,7 @@ export const WidgetForm = ({
 
         <WidgetFormInput label="Width">
           <input
+            data-testid="form-width-input"
             value={width}
             onChange={(e) => handleWidth(parseInt(e.target.value))}
             type="number"
@@ -157,6 +160,7 @@ export const WidgetForm = ({
 
         <WidgetFormInput label="Height">
           <input
+            data-testid="form-height-input"
             value={height}
             onChange={(e) => handleHeight(parseInt(e.target.value))}
             type="number"
@@ -164,7 +168,7 @@ export const WidgetForm = ({
           />
         </WidgetFormInput>
 
-        <button type="submit" className="form-submit">
+        <button data-testid="form-submit" type="submit" className="form-submit">
           <span className="icon">&#43;</span> Add Widget
         </button>
       </form>
