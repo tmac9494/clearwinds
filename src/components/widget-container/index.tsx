@@ -77,7 +77,7 @@ export const WidgetContainer = ({
 
   return (
     <div
-      onAnimationEnd={() => setAnimate(false)}
+      onAnimationEnd={() => animate && setAnimate(false)}
       style={{
         background: isOver ? "lightblue" : "none",
         width: `${width}px`,

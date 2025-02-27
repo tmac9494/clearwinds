@@ -23,6 +23,13 @@
   }
 }
 
+.widget-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 4px;
+}
+
 .widget-title {
   font-size: 14px;
   margin: 0;
