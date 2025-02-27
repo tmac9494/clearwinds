@@ -64,6 +64,8 @@ export const PieSlice = <DataType,>({
               })
           )}
           fill={getColor(arc)}
+          strokeWidth={2}
+          stroke="#fff"
           onClick={() => onClickDatum(arc)}
           onTouchStart={() => onClickDatum(arc)}
         />

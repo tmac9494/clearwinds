@@ -17,16 +17,17 @@ export class WidgetStateHandler {
   }
 
   [ActionTypes.ADD_WIDGET](action: WidgetContextActions) {
+    const widgetId = action.payload.id;
+
     if (action.payload.type === WidgetTypes.counter) {
-      const counterId = action.payload.id;
       this[ActionTypes.SET_COUNTER]({
         type: ActionTypes.SET_COUNTER,
-        payload: { counterId, value: 0 },
+        payload: { widgetId, value: 0 },
       });
     }
 
     this.setWidgetState({
-      [action.payload.id]: {
+      [widgetId]: {
         ...action.payload,
         position: {
           ...action.payload.position,
