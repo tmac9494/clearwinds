@@ -2,68 +2,73 @@ import React from "react";
 import { Counter } from "../counter";
 import { DataTable } from "../data-table";
 import { PieChartWidget } from "../PieChartWidget";
-import { WidgetContainerProps, WidgetTypes } from "../widget-container";
+import { WidgetContainerProps } from "../widget-container";
+import {
+  ActionTypes,
+  useCounters,
+  usePieCounters,
+  useWidgetContextDispatch,
+} from "../../hooks/use-widget-context";
+import { WidgetTypes } from "../../utils/types";
 
 export const WidgetContent = ({
   widget,
-  counters,
   counterTitles,
   gridItemBaseWidth,
   gridItemBaseHeight,
-  pieCounters,
-  setPieCoutners,
-  setCounters,
 }: {
   widget: WidgetContainerProps;
-  counters: Record<string, number>;
   counterTitles: Record<string, string>;
   gridItemBaseWidth: number;
   gridItemBaseHeight: number;
-  pieCounters: Record<string, string[]>;
-  setPieCoutners: (value: Record<string, string[]>) => void;
-  setCounters: (value: React.SetStateAction<Record<string, number>>) => void;
 }) => {
-  if (widget.type === WidgetTypes.chart) {
-    return (
-      <PieChartWidget
-        counterTitles={counterTitles}
-        counters={counters}
-        widget={widget}
-        gridItemBaseWidth={gridItemBaseWidth - 24}
-        gridItemBaseHeight={gridItemBaseHeight}
-        pieCounters={pieCounters}
-        setPieCoutners={setPieCoutners}
-        counterData={(pieCounters[widget.id] || []).reduce(
-          (acc, val) =>
-            acc.concat([
-              {
-                id: val,
-                value: counters[val] ?? 0,
+  const contextDispatch = useWidgetContextDispatch();
+  const pieCounterState = usePieCounters();
+  const counters = useCounters();
+
+  switch (widget.type) {
+    case WidgetTypes.counter:
+      return (
+        <Counter
+          value={counters[widget.id]}
+          onChange={(value: number) => {
+            contextDispatch({
+              type: ActionTypes.SET_COUNTER,
+              payload: {
+                counterId: widget.id,
+                value,
               },
-            ]),
-          [] as Array<{
-            id: string;
-            value: number;
-          }>
-        )}
-      />
-    );
+            });
+          }}
+        />
+      );
+    case WidgetTypes.dataTable:
+      return (
+        <DataTable widget={widget} refetchInterval={widget?.refetchInterval} />
+      );
+    case WidgetTypes.chart:
+      return (
+        <PieChartWidget
+          counterTitles={counterTitles}
+          widget={widget}
+          gridItemBaseWidth={gridItemBaseWidth - 24}
+          gridItemBaseHeight={gridItemBaseHeight}
+          counterData={(pieCounterState[widget.id] || []).reduce(
+            (acc, val) =>
+              acc.concat([
+                {
+                  id: val,
+                  value: counters[val] ?? 0,
+                },
+              ]),
+            [] as Array<{
+              id: string;
+              value: number;
+            }>
+          )}
+        />
+      );
+    default:
+      return null;
   }
-  if (widget.type === WidgetTypes.counter) {
-    return (
-      <Counter
-        value={counters[widget.id]}
-        onChange={(value: number) => {
-          setCounters((prev) => ({
-            ...prev,
-            [widget.id]: value,
-          }));
-        }}
-      />
-    );
-  }
-  if (widget.type === WidgetTypes.dataTable) {
-    return <DataTable refetchInterval={widget?.refetchInterval} />;
-  }
-  return null;
 };

@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect } from "react";
-import { WidgetTypes } from "../widget-container/";
 import {
   ActionTypes,
   useWidgetContextDispatch,
 } from "../../hooks/use-widget-context/";
 import { WidgetFormInput } from "../widget-form-input/";
 import "./styles.scss";
+import { WidgetTypes } from "../../utils/types";
 
 const widgetTypeTitles = {
   [WidgetTypes.dataTable]: "Data Table",
@@ -165,7 +165,7 @@ export const WidgetForm = ({
         </WidgetFormInput>
 
         <button type="submit" className="form-submit">
-          Add Widget
+          <span className="icon">&#43;</span> Add Widget
         </button>
       </form>
     </div>

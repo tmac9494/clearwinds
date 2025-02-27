@@ -1,8 +1,9 @@
 import React from "react";
-import { WidgetContainer, WidgetTypes } from "../widget-container";
+import { WidgetContainer } from "../widget-container";
 import { WidgetForm } from "../widget-form";
 
 import "./styles.scss";
+import { WidgetTypes } from "../../utils/types";
 
 export const CreateNewWidget = ({
   gridItemBaseWidth,
@@ -17,11 +18,12 @@ export const CreateNewWidget = ({
 }) => {
   return (
     <WidgetContainer
+      data-testid="new-widget"
       type={"new-widget" as WidgetTypes}
       key="widget-input"
       id="widget-input"
       width={gridItemBaseWidth}
-      height={gridItemBaseHeight}
+      height={gridItemBaseHeight * 2}
       position={{
         width: 1,
         height: 1,
@@ -31,6 +33,7 @@ export const CreateNewWidget = ({
         title: "Add New Widget",
       }}
       draggable={false}
+      animatable={false}
     >
       <div className="content-container new-widget">
         <WidgetForm newIndex={newIndex} createNewCounter={createNewCounter} />

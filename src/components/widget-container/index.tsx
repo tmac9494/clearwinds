@@ -1,16 +1,12 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useEffect, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import {
   ActionTypes,
   useWidgetContextDispatch,
 } from "../../hooks/use-widget-context";
 import "./styles.scss";
-
-export enum WidgetTypes {
-  dataTable = "dataTable",
-  counter = "counter",
-  chart = "chart",
-}
+import { WidgetTypes } from "../../utils/types";
+import classNames from "classnames";
 
 export type WidgetState = {
   id: string;
@@ -24,12 +20,14 @@ export type WidgetState = {
   };
   type: WidgetTypes;
   refetchInterval?: number;
+  refresh?: boolean;
 };
 
 export interface WidgetContainerProps extends PropsWithChildren<WidgetState> {
   width: number;
   height: number;
   draggable?: boolean;
+  animatable?: boolean;
 }
 
 export const WidgetContainer = ({
@@ -40,8 +38,11 @@ export const WidgetContainer = ({
   width,
   height,
   draggable = true,
+  animatable = true,
 }: WidgetContainerProps) => {
   const widgetDispatch = useWidgetContextDispatch();
+
+  const [animate, setAnimate] = useState(false);
 
   const [{ opacity }, dragRef] = useDrag(
     () => ({
@@ -70,14 +71,23 @@ export const WidgetContainer = ({
     },
   }));
 
+  useEffect(() => {
+    animatable && setAnimate(true);
+  }, [position.index, animatable]);
+
   return (
     <div
+      onAnimationEnd={() => setAnimate(false)}
       style={{
         background: isOver ? "lightblue" : "none",
         width: `${width}px`,
+        maxWidth: `${width}px`,
         height: `${height}px`,
       }}
-      className="widget-container"
+      className={classNames(
+        "widget-container",
+        animate && animatable && "animate"
+      )}
       ref={draggable ? (drop as any) : null}
     >
       <div

@@ -11,7 +11,15 @@ export type TableData = {
   };
 };
 
-export const useTableData = ({ refetch }: { refetch?: number }) => {
+export const useTableData = ({
+  refetch,
+  refresh,
+  onRefresh,
+}: {
+  refetch?: number;
+  refresh?: boolean;
+  onRefresh: () => void;
+}) => {
   const [data, setData] = useState<TableData[]>();
   const hasFetched = useRef(false);
   const refetchTimeout = useRef<ReturnType<typeof setTimeout>>();
@@ -28,6 +36,14 @@ export const useTableData = ({ refetch }: { refetch?: number }) => {
       }, refetch * 1000);
     }
   }, [refetch]);
+
+  useEffect(() => {
+    if (refresh) {
+      hasFetched.current = false;
+      setData(undefined);
+      onRefresh();
+    }
+  }, [onRefresh, refresh]);
 
   useEffect(() => {
     if (!hasFetched.current && !data) {

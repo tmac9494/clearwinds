@@ -1,43 +1,31 @@
-import React, { useCallback, useLayoutEffect, useState } from "react";
+import React, { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import {
   ActionTypes,
-  useWidgetContext,
   useWidgetContextDispatch,
+  useWidgets,
 } from "../../hooks/use-widget-context/";
-import { WidgetContainer, WidgetTypes } from "../widget-container/";
+import { WidgetContainer, WidgetContainerProps } from "../widget-container/";
 import { CreateNewWidget } from "../create-new-widget";
 import { WidgetHeader } from "../widget-header";
 import "./styles.scss";
 import { WidgetContent } from "../widget-content";
+import { WidgetTypes } from "../../utils/types";
+import { getWidgetGridColumns, getWidgetGridRows } from "../../utils";
 
 export const WidgetGrid = () => {
-  const widgets = useWidgetContext();
+  const widgets = useWidgets();
   const dispatch = useWidgetContextDispatch();
-  const initialCounters = widgets.reduce(
-    (acc, widget) =>
-      widget.type === WidgetTypes.counter
-        ? {
-            ...acc,
-            [widget.id]: 0,
-          }
-        : acc,
-    {}
-  );
 
   const [containerWidth, setContainerWidth] = React.useState(0);
   const [node, setNode] = useState<HTMLDivElement>();
 
-  const [counters, setCounters] =
-    useState<Record<string, number>>(initialCounters);
-  const [pieCounters, setPieCoutners] = useState<Record<string, string[]>>({});
-
-  const dimensionDenominator =
-    containerWidth >= 1000 ? 5 : containerWidth >= 600 ? 3 : 2;
+  const gridColumns = getWidgetGridColumns(containerWidth);
+  const gridRows = getWidgetGridRows();
 
   const gridItemBaseWidth = node
-    ? node.getBoundingClientRect().width / dimensionDenominator
-    : containerWidth / dimensionDenominator;
-  const gridItemBaseHeight = window.innerHeight / dimensionDenominator;
+    ? node.getBoundingClientRect().width / gridColumns
+    : containerWidth / gridColumns;
+  const gridItemBaseHeight = window.innerHeight / gridRows;
 
   const containerCallback = useCallback((node?: HTMLDivElement) => {
     if (node) {
@@ -61,34 +49,45 @@ export const WidgetGrid = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [node, widgets]);
 
-  const counterTitles = widgets.reduce(
-    (acc, widget) =>
-      widget.type === WidgetTypes.counter
-        ? {
-            ...acc,
-            [widget.id]: widget.config.title,
-          }
-        : acc,
-    {} as Record<string, string>
+  const counterTitles = useMemo(
+    () =>
+      widgets.reduce(
+        (acc, widget) =>
+          widget.type === WidgetTypes.counter
+            ? {
+                ...acc,
+                [widget.id]: widget.config.title,
+              }
+            : acc,
+        {} as Record<string, string>
+      ),
+    [widgets]
   );
 
-  const removeCounterFromPieCounters = (counterId: string) => {
-    const pieCounterUpdate = Object.keys(pieCounters).reduce((acc, key) => {
-      if (pieCounters[key]?.includes(counterId)) {
-        return {
-          ...acc,
-          [key]: pieCounters[key].filter((id) => id !== counterId),
-        };
-      }
-      return acc;
-    }, {} as Record<string, string[]>);
-
-    setPieCoutners(pieCounterUpdate);
+  const refreshActions = {
+    [WidgetTypes.dataTable]: (id: string) => {
+      dispatch({
+        type: ActionTypes.RESET_DATA_TABLE,
+        payload: id,
+      });
+    },
+    [WidgetTypes.chart]: (id: string) => {
+      dispatch({
+        type: ActionTypes.RESET_CHART,
+        payload: id,
+      });
+    },
+    [WidgetTypes.counter]: (id: string) => {
+      dispatch({
+        type: ActionTypes.RESET_COUNTER,
+        payload: id,
+      });
+    },
   };
 
   return (
     <div className="grid" ref={containerCallback as any}>
-      {widgets.map((widget: any) => {
+      {widgets.map((widget: WidgetContainerProps) => {
         return (
           <WidgetContainer
             key={widget.id}
@@ -101,24 +100,21 @@ export const WidgetGrid = () => {
           >
             <div className="content-container">
               <WidgetHeader
+                onRefresh={() => refreshActions[widget.type](widget.id)}
                 onRemove={() => {
                   dispatch({
                     type: ActionTypes.REMOVE_WIDGET,
                     payload: widget.id,
                   });
-                  removeCounterFromPieCounters(widget.id);
+                  //   removeCounterFromPieCounters(widget.id);
                 }}
                 title={widget.config.title}
               />
               <WidgetContent
                 widget={widget}
-                counters={counters}
                 counterTitles={counterTitles}
                 gridItemBaseWidth={gridItemBaseWidth}
                 gridItemBaseHeight={gridItemBaseHeight}
-                pieCounters={pieCounters}
-                setPieCoutners={setPieCoutners}
-                setCounters={setCounters}
               />
             </div>
           </WidgetContainer>
@@ -129,10 +125,13 @@ export const WidgetGrid = () => {
         gridItemBaseHeight={gridItemBaseHeight}
         newIndex={widgets[widgets.length - 1]?.position.index + 1 || 0}
         createNewCounter={(id: string) =>
-          setCounters((prev) => ({
-            ...prev,
-            [id]: 0,
-          }))
+          dispatch({
+            type: ActionTypes.SET_COUNTER,
+            payload: {
+              counterId: id,
+              value: 0,
+            },
+          })
         }
       />
     </div>

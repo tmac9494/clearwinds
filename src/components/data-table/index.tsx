@@ -1,13 +1,28 @@
 import React from "react";
 import "./styles.scss";
 import { TableData, useTableData } from "../../hooks/use-table-data";
+import { WidgetContainerProps } from "../widget-container";
+import {
+  ActionTypes,
+  useWidgetContextDispatch,
+} from "../../hooks/use-widget-context";
 
 export const DataTable = ({
   refetchInterval,
+  widget,
 }: {
   refetchInterval?: number;
+  widget: WidgetContainerProps;
 }) => {
-  const { data: tableData, error } = useTableData({ refetch: refetchInterval });
+  const dispatch = useWidgetContextDispatch();
+
+  const { data: tableData, error } = useTableData({
+    refetch: refetchInterval,
+    refresh: widget?.refresh,
+    onRefresh: () => {
+      dispatch({ type: ActionTypes.RESET_REFRESH, payload: widget.id });
+    },
+  });
 
   if (error) {
     return <div className="data-table">Error loading data</div>;

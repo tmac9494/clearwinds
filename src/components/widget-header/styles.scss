@@ -5,11 +5,21 @@
   padding: 2px 2px 0 2px;
   position: relative;
   z-index: 29;
-  .close {
+  .close,
+  .refresh {
     cursor: pointer;
     font-weight: bold;
     border: 0;
+    border-radius: 4px;
     background: none;
+    width: 25px;
+    height: 25px;
+    &:hover {
+      background: #e4e4e4;
+    }
+  }
+  .refresh {
+    margin-right: 4px;
   }
 }
 
