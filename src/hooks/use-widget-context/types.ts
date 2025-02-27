@@ -1,4 +1,4 @@
-import { WidgetContainerProps } from "../../components/widget-container";
+import { WidgetContainerProps } from "../../utils/types";
 
 export enum ActionTypes {
   ADD_WIDGET = "ADD_WIDGET",

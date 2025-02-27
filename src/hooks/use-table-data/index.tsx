@@ -1,15 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-
-export type TableData = {
-  id: string;
-  name: string;
-  username: number;
-  email: string;
-  address: {
-    city: string;
-    zipcode: string;
-  };
-};
+import { TableData } from "../../utils/types";
 
 export const useTableData = ({
   refetch,

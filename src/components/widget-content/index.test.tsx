@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 
 import { WidgetContent } from ".";
-import { WidgetContainerProps } from "../widget-container";
+import { WidgetContainerProps } from "../../utils/types";
 import { WidgetTypes } from "../../utils/types";
 
 describe("WidgetContent", () => {

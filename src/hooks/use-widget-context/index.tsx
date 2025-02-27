@@ -1,12 +1,12 @@
 import React, { PropsWithChildren, useContext, useReducer } from "react";
 import { WidgetContextReducer } from "./reducer";
 import { getWidgetStateFromStorage } from "../../utils";
-import { WidgetContainerProps } from "../../components/widget-container";
 import {
   CountersState,
   WidgetContextActions,
   WidgetContextState,
 } from "./types";
+import { WidgetContainerProps } from "../../utils/types";
 
 const WidgetContext = React.createContext<{
   widgets: WidgetContainerProps[];

@@ -4,12 +4,12 @@ import {
   useWidgetContextDispatch,
   useWidgets,
 } from "../../hooks/use-widget-context/";
-import { WidgetContainer, WidgetContainerProps } from "../widget-container/";
+import { WidgetContainer } from "../widget-container/";
 import { CreateNewWidget } from "../create-new-widget";
 import { WidgetHeader } from "../widget-header";
 import "./styles.scss";
 import { WidgetContent } from "../widget-content";
-import { WidgetTypes } from "../../utils/types";
+import { WidgetContainerProps, WidgetTypes } from "../../utils/types";
 import { getWidgetGridColumns, getWidgetGridRows } from "../../utils";
 
 export const WidgetGrid = () => {

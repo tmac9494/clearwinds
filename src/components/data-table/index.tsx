@@ -1,11 +1,11 @@
 import React from "react";
 import "./styles.scss";
-import { TableData, useTableData } from "../../hooks/use-table-data";
-import { WidgetContainerProps } from "../widget-container";
+import { useTableData } from "../../hooks/use-table-data";
 import {
   ActionTypes,
   useWidgetContextDispatch,
 } from "../../hooks/use-widget-context";
+import { TableData, WidgetContainerProps } from "../../utils/types";
 
 export const DataTable = ({
   refetchInterval,

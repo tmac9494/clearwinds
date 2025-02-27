@@ -5,30 +5,8 @@ import {
   useWidgetContextDispatch,
 } from "../../hooks/use-widget-context";
 import "./styles.scss";
-import { WidgetTypes } from "../../utils/types";
 import classNames from "classnames";
-
-export type WidgetState = {
-  id: string;
-  position: {
-    index: number;
-    width: number;
-    height: number;
-  };
-  config: {
-    title: string;
-  };
-  type: WidgetTypes;
-  refetchInterval?: number;
-  refresh?: boolean;
-};
-
-export interface WidgetContainerProps extends PropsWithChildren<WidgetState> {
-  width: number;
-  height: number;
-  draggable?: boolean;
-  animatable?: boolean;
-}
+import { WidgetContainerProps } from "../../utils/types";
 
 export const WidgetContainer = ({
   id,
