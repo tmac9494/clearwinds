@@ -10,7 +10,7 @@
 
 - npm run test
 
-## Instrusctions for getting test coverage
+## Instructions for getting test coverage
 
 - npm run test-coverage
 
