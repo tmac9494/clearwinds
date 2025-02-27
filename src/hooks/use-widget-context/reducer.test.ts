@@ -1,3 +1,4 @@
+import { WidgetTypes } from "../../utils/types";
 import { WidgetStateHandler } from "./reducer";
 import { ActionTypes, WidgetContextState } from "./types";
 
@@ -52,6 +53,28 @@ describe("Widget Context State Handler", () => {
     const newState = stateHandler.getState();
     expect(newState.widgets.counter).toEqual(undefined);
     expect(newState.pieCounters["pie-chart"]).toEqual([]);
+  });
+
+  it("should remove the widget and the pie counter on REMOVE_WIDGET action", () => {
+    stateHandler["ADD_WIDGET"]({
+      type: ActionTypes.ADD_WIDGET,
+      payload: {
+        id: "new-pie-chart",
+        type: WidgetTypes.chart,
+        position: { width: 1, height: 1, index: 2 },
+      },
+    });
+    stateHandler["ADD_COUNTER_TO_CHART"]({
+      type: ActionTypes.ADD_COUNTER_TO_CHART,
+      payload: { chartId: "new-pie-chart", counterId: "counter" },
+    });
+    stateHandler["REMOVE_WIDGET"]({
+      type: ActionTypes.REMOVE_WIDGET,
+      payload: "new-pie-chart",
+    });
+    const newState = stateHandler.getState();
+    expect(newState.widgets["new-pie-chart"]).toEqual(undefined);
+    expect(newState.pieCounters["new-pie-chart"]).toEqual(undefined);
   });
 
   it("should add the widget on ADD_WIDGET action", () => {

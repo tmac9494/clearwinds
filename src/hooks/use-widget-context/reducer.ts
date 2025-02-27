@@ -52,6 +52,18 @@ export class WidgetStateHandler {
       });
     }
 
+    if (toRemove.type === WidgetTypes.chart) {
+      this.state.pieCounters = Object.keys(this.state.pieCounters).reduce(
+        (acc, key) => {
+          if (key !== action.payload) {
+            acc[key] = this.state.pieCounters[key];
+          }
+          return acc;
+        },
+        {} as PieCounterState
+      );
+    }
+
     this.state = {
       widgets: restOfWidgets,
       counters: this.state.counters,
