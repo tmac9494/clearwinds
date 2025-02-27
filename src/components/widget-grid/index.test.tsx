@@ -83,5 +83,6 @@ describe("WidgetGrid", () => {
     expect(screen.getByTestId("chart-widget")).toBeInTheDocument();
     expect(screen.getByTestId("data-table-widget")).toBeInTheDocument();
     expect(screen.getByTestId("counter-widget")).toBeInTheDocument();
+    expect(screen.getByTestId("new-widget")).toBeInTheDocument();
   });
 });

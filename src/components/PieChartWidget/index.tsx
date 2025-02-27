@@ -54,6 +54,8 @@ export const PieChartWidget = ({
     [counters, counterTitles]
   );
 
+  const chartWidth = gridItemBaseWidth * widget.position.width;
+
   return (
     <div className="widget-chart-container" data-testid="chart-widget">
       <div className="modal-container">
@@ -86,11 +88,7 @@ export const PieChartWidget = ({
       <div className="chart-container">
         <PieChart<(typeof dataset)[0]>
           margin={{ top: 2, bottom: 40, left: 0, right: 0 }}
-          width={
-            gridItemBaseWidth > 400
-              ? 400
-              : gridItemBaseWidth * widget.position.width
-          }
+          width={chartWidth > 300 ? 300 : chartWidth}
           height={gridItemBaseHeight * widget.position.height}
           data={dataset}
           getLabel={(data) => counterTitles[data?.data.id]}
