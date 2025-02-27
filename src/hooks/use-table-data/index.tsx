@@ -21,14 +21,19 @@ export const useTableData = ({
   onRefresh: () => void;
 }) => {
   const [data, setData] = useState<TableData[]>();
+  const [error, setError] = useState(false);
   const hasFetched = useRef(false);
   const refetchTimeout = useRef<ReturnType<typeof setTimeout>>();
 
   const fetchData = useCallback(async () => {
     const response = await fetch("https://jsonplaceholder.typicode.com/users");
+    hasFetched.current = true;
+    if (!response.ok) {
+      setError(true);
+      return;
+    }
     const data = await response.json();
     setData(data);
-    hasFetched.current = true;
     if (refetch) {
       refetchTimeout.current = setTimeout(() => {
         hasFetched.current = false;
@@ -41,15 +46,16 @@ export const useTableData = ({
     if (refresh) {
       hasFetched.current = false;
       setData(undefined);
+      setError(false);
       onRefresh();
     }
   }, [onRefresh, refresh]);
 
   useEffect(() => {
-    if (!hasFetched.current && !data) {
+    if (!hasFetched.current && !data && !error) {
       fetchData();
     }
-  }, [fetchData, data]);
+  }, [fetchData, data, error]);
 
   useEffect(() => {
     return () => {
@@ -59,5 +65,5 @@ export const useTableData = ({
     };
   }, []);
 
-  return { data, error: hasFetched.current === true && !data };
+  return { data, error };
 };

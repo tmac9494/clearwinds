@@ -9,7 +9,7 @@ export const Counter = ({
   onChange: (value: number) => void;
 }) => {
   return (
-    <div className="counter">
+    <div data-testid="counter-widget" className="counter">
       <div className="counter-controls">
         <button
           data-testid="counter-decrement"

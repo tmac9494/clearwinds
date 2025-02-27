@@ -1,6 +1,7 @@
 import { WidgetTypes } from "../../utils/types";
-import { WidgetStateHandler } from "./reducer";
+import { WidgetContextReducer, WidgetStateHandler } from "./reducer";
 import { ActionTypes, WidgetContextState } from "./types";
+import * as utils from "../../utils";
 
 describe("Widget Context State Handler", () => {
   const initialState = {
@@ -108,6 +109,37 @@ describe("Widget Context State Handler", () => {
     expect(newState.counters["new-widget"]).toEqual(0);
   });
 
+  it("should reset the chart counter state on RESET_CHART action", () => {
+    stateHandler["ADD_COUNTER_TO_CHART"]({
+      type: ActionTypes.ADD_COUNTER_TO_CHART,
+      payload: { chartId: "pie-chart", counterId: "new-widget" },
+    });
+    stateHandler["RESET_CHART"]({
+      type: ActionTypes.RESET_CHART,
+      payload: "pie-chart",
+    });
+    const newState = stateHandler.getState();
+    expect(newState.pieCounters["pie-chart"]).toEqual([]);
+  });
+
+  it("should reset set refresh to true on RESET_DATA_TABLE action", () => {
+    stateHandler["RESET_DATA_TABLE"]({
+      type: ActionTypes.RESET_DATA_TABLE,
+      payload: "data-table",
+    });
+    const newState = stateHandler.getState();
+    expect(newState.widgets["data-table"].refresh).toEqual(true);
+  });
+
+  it("should set refresh to false on RESET_REFRESH action", () => {
+    stateHandler["RESET_REFRESH"]({
+      type: ActionTypes.RESET_REFRESH,
+      payload: "data-table",
+    });
+    const newState = stateHandler.getState();
+    expect(newState.widgets["data-table"].refresh).toEqual(false);
+  });
+
   it("should add counter to pie chart on ADD_COUNTER_TO_CHART action", () => {
     stateHandler["ADD_COUNTER_TO_CHART"]({
       type: ActionTypes.ADD_COUNTER_TO_CHART,
@@ -124,5 +156,27 @@ describe("Widget Context State Handler", () => {
     });
     const newState = stateHandler.getState();
     expect(newState.pieCounters["pie-chart"]).not.toContain("new-widget");
+  });
+
+  it("should set local storage after state handler runs", () => {
+    const spy = jest.spyOn(utils, "saveWidgetStateToStorage");
+    WidgetContextReducer(initialState, {
+      type: ActionTypes.ADD_WIDGET,
+      payload: {
+        id: "new-widget2",
+        type: "counter",
+        position: { width: 1, height: 1, index: 3 },
+      },
+    });
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it("should throw an error if action type is not defined", () => {
+    expect(() => {
+      WidgetContextReducer(initialState, {
+        type: "INVALID_ACTION" as ActionTypes,
+        payload: {},
+      });
+    }).toThrow("Invalid action type");
   });
 });

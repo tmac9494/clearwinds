@@ -189,8 +189,7 @@ export const WidgetContextReducer = (
 ) => {
   const stateHandler = new WidgetStateHandler(state);
   if (!stateHandler[action.type]) {
-    console.error("Invalid action type");
-    return state;
+    throw new Error("Invalid action type");
   }
 
   stateHandler[action.type](action);

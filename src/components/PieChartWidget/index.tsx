@@ -55,9 +55,13 @@ export const PieChartWidget = ({
   );
 
   return (
-    <div className="widget-chart-container">
+    <div className="widget-chart-container" data-testid="chart-widget">
       <div className="modal-container">
-        <button className="open" onClick={() => setModal(!modal)}>
+        <button
+          data-testid="chart-open-modal"
+          className="open"
+          onClick={() => setModal(!modal)}
+        >
           <span>Options</span>
           <span>&#129171;</span>
         </button>

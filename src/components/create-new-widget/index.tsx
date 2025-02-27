@@ -18,7 +18,6 @@ export const CreateNewWidget = ({
 }) => {
   return (
     <WidgetContainer
-      data-testid="new-widget"
       type={"new-widget" as WidgetTypes}
       key="widget-input"
       id="widget-input"
@@ -35,7 +34,7 @@ export const CreateNewWidget = ({
       draggable={false}
       animatable={false}
     >
-      <div className="content-container new-widget">
+      <div className="content-container new-widget" data-testid="new-widget">
         <WidgetForm newIndex={newIndex} createNewCounter={createNewCounter} />
       </div>
     </WidgetContainer>

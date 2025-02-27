@@ -25,15 +25,23 @@ export const DataTable = ({
   });
 
   if (error) {
-    return <div className="data-table">Error loading data</div>;
+    return (
+      <div className="data-table" data-testid="data-table-widget">
+        Error loading data
+      </div>
+    );
   }
 
   if (!tableData) {
-    return <div className="data-table">Loading...</div>;
+    return (
+      <div className="data-table" data-testid="data-table-widget">
+        Loading...
+      </div>
+    );
   }
 
   return (
-    <div className="data-table">
+    <div className="data-table" data-testid="data-table-widget">
       <div className="row">
         <div className="table-cell heading">Name</div>
         <div className="table-cell heading">User Name</div>

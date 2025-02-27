@@ -2,18 +2,24 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 
 import { CreateNewWidget } from ".";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
-describe.skip("CreateNewWidget", () => {
-  // skip below due to dnd import error
-  it.skip("should render the create new widget component", () => {
+describe("CreateNewWidget", () => {
+  const renderComponent = () =>
     render(
-      <CreateNewWidget
-        newIndex={1}
-        gridItemBaseWidth={1}
-        gridItemBaseHeight={1}
-        createNewCounter={() => {}}
-      />
+      <DndProvider backend={HTML5Backend}>
+        <CreateNewWidget
+          newIndex={1}
+          gridItemBaseWidth={1}
+          gridItemBaseHeight={1}
+          createNewCounter={() => {}}
+        />
+      </DndProvider>
     );
+  // skip below due to dnd import error
+  it("should render the create new widget component", () => {
+    renderComponent();
     expect(screen.getByTestId("new-widget")).toBeInTheDocument();
   });
 });
