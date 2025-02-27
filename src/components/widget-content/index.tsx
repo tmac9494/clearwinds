@@ -1,7 +1,7 @@
 import React from "react";
 import { Counter } from "../counter";
 import { DataTable } from "../data-table";
-import { PieChartWidget } from "../PieChartWidget";
+import { PieChartWidget } from "../pie-chart-widget";
 import { WidgetContainerProps } from "../widget-container";
 import {
   ActionTypes,
