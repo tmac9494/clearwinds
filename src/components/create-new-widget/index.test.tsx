@@ -17,7 +17,7 @@ describe("CreateNewWidget", () => {
         />
       </DndProvider>
     );
-  // skip below due to dnd import error
+
   it("should render the create new widget component", () => {
     renderComponent();
     expect(screen.getByTestId("new-widget")).toBeInTheDocument();

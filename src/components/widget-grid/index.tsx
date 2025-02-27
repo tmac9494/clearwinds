@@ -110,7 +110,6 @@ export const WidgetGrid = () => {
                     type: ActionTypes.REMOVE_WIDGET,
                     payload: widget.id,
                   });
-                  //   removeCounterFromPieCounters(widget.id);
                 }}
                 title={widget.config.title}
               />
