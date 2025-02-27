@@ -17,7 +17,6 @@
 ## List of potential improvements if given more time
 
 - styles
-- organize types
 - better solution for catching resize events in grid
 - reusable error boundaries
 - more drop points inbetween individual widgets
